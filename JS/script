@@ -1,0 +1,34 @@
+document.addEventListener("DOMContentLoaded", function () {
+    const sideMenu = document.getElementById("side-menu");
+    const banner = document.querySelector(".carousel"); // Lấy phần tử banner album
+    const bannerHeight = banner.offsetHeight; // Chiều cao của banner
+    const menuBarHeight = 60; // Chiều cao của menubar (nếu cần)
+
+    window.addEventListener("scroll", function () {
+        if (window.scrollY > bannerHeight - menuBarHeight) {
+            sideMenu.classList.add("fixed"); // Thêm lớp 'fixed' khi cuộn qua banner
+        } else {
+            sideMenu.classList.remove("fixed"); // Loại bỏ lớp 'fixed' khi cuộn lên trên banner
+        }
+    });
+
+    menuLinks.forEach(link => {
+        link.addEventListener("click", function (e) {
+            e.preventDefault(); // Ngăn chặn hành vi mặc định của liên kết
+            const targetId = this.getAttribute("href").substring(1); // Lấy ID của phần tử mục tiêu
+            const targetElement = document.getElementById(targetId);
+
+            if (targetElement) {
+                const elementPosition = targetElement.offsetTop; // Vị trí của phần tử
+                const offsetPosition = elementPosition - menuBarHeight - bannerHeight; // Điều chỉnh vị trí cuộn
+
+                window.scrollTo({
+                    top: offsetPosition,
+                    behavior: "smooth" // Cuộn mượt
+                });
+            }
+        });
+    });
+
+});
+
